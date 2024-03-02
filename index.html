@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMD-like Interface</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0f0f0f;
+            color: #00ff00;
+            padding: 20px;
+        }
+        #console {
+            width: 100%;
+            height: 200px;
+            background-color: #000;
+            overflow-y: scroll;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            margin-bottom: 10px;
+        }
+        #commandInput {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0f0f0f;
+            color: #00ff00;
+            border: none;
+            outline: none;
+            padding: 10px;
+            display: block;
+            margin-bottom: 10px;
+            width: calc(100% - 22px); /* Subtracting padding and border widths */
+            overflow-y: auto; /* Enable vertical scrolling */
+            resize: vertical; /* Allow vertical resizing */
+        }
+        button {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0f0f0f;
+            color: #00ff00;
+            border: none;
+            outline: none;
+            padding: 10px;
+            display: block;
+            margin-bottom: 10px;
+            width: calc(100% - 22px); /* Subtracting padding and border widths */
+        }
+        button:hover {
+            background-color: #003300; /* Darker shade of green on hover */
+        }
+        #console-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="console-container">
+        <div id="console"></div>
+        <div id="commandInput" contenteditable="true" autofocus></div>
+        <button onclick="runCommand()">Run</button>
+	<button onclick="refreshPage()">Refresh</button>
+        <button onclick="saveHTML()">Save as HTML</button>
+        <button onclick="openGoogle()">Rate On Myket</button>
+	<p></p>
+	</br></br></br>
+	<button>Literally Code</button>
+    </div>
+
+    <script>
+	 function refreshPage() {
+            location.reload();
+	}
+        function runCommand() {
+            var input = document.getElementById("commandInput").innerText;
+            var consoleDiv = document.getElementById("console");
+            // consoleDiv.innerHTML += "<p>> " + input + "</p>";
+            document.getElementById("commandInput").innerText = "";
+
+            consoleDiv.innerHTML += "<p>" + executeCommand(input) + "</p>";
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        function executeCommand(input) {
+            // For demonstration purposes, just echoing the input
+            return input;
+        }
+
+        function saveHTML() {
+            var htmlContent = document.getElementById("console").innerHTML;
+            var blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+            var a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "console_output.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function openGoogle() {
+            window.open("myket://comment?id=com.literallycode.html5", "_blank");
+        }
+
+        // Focus input field on page load
+        window.onload = function() {
+            document.getElementById("commandInput").focus();
+        };
+    </script>
+</body>
+</html>
